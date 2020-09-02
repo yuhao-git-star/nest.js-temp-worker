@@ -4,6 +4,7 @@
 
 * `elasticsearch`
 * `typeorm`
+* `Rabbit MQ`
 * `Socket.io`
 * `jwt`, `passport`
 * `winston`
@@ -41,3 +42,12 @@ kubectl create configmap redishost --from-literal=REDISHOST=${REDISHOST_IP}
 * NODE_ENV
 * REDISHOST
 * PORT
+
+## rabbit mq
+
+```=json
+{
+   "pattern": "ns-app-search-not-found-restaurant",
+   "data": "Hi"
+}
+```

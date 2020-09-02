@@ -40,6 +40,11 @@ export class ConfigService {
       ELASRIC_USER: Joi.string().default(''),
       ELASRIC_PASSWORD: Joi.string().default(''),
       JWT_SIGN_KEY: Joi.string().default(''),
+      RABBIT_MQ_ACC: Joi.string().default(''),
+      RABBIT_MQ_PW: Joi.string().default(''),
+      RABBIT_MQ_URL: Joi.string().default(''),
+      RABBIT_MQ_PORT: Joi.number().default(5672),
+      RABBIT_MQ_QUEUE: Joi.string().default(''),
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -131,5 +136,25 @@ export class ConfigService {
 
   get jwtSignKey(): string {
     return this.envConfig.JWT_SIGN_KEY;
+  }
+
+  get rabbitMqAccount(): string {
+    return this.envConfig.RABBIT_MQ_ACC;
+  }
+
+  get rabbitMqPassword(): string {
+    return this.envConfig.RABBIT_MQ_PW;
+  }
+
+  get rabbitMqUrl(): string {
+    return this.envConfig.RABBIT_MQ_URL;
+  }
+
+  get rabbitMqPort(): string {
+    return this.envConfig.RABBIT_MQ_PORT;
+  }
+
+  get rabbitMqQueue(): string {
+    return this.envConfig.RABBIT_MQ_QUEUE;
   }
 }

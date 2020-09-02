@@ -7,7 +7,8 @@ export class CronService {
 
     constructor(@Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly loggerWinston: LoggerService) { }
 
-    @Cron(CronExpression.EVERY_10_SECONDS)
+    // @Cron(CronExpression.EVERY_10_SECONDS)
+    // @Timeout(1000)
     handleCron() {
         this.loggerWinston.log('Called when the current second is 10');
     }

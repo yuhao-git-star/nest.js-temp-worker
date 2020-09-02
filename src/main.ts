@@ -6,14 +6,35 @@ import { Apiv2Module } from './apiv2/apiv2.module';
 import * as fs from 'fs';
 import path = require('path');
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { Transport } from '@nestjs/microservices';
 
 const ENV = process.env.NODE_ENV || 'development';
 console.log(`NODE_ENV: ${ENV}`);
+
+const RABBIT_MQ_ACC = process.env.RABBIT_MQ_ACC || 'guest';
+const RABBIT_MQ_PW = process.env.RABBIT_MQ_PW || 'guest';
+const RABBIT_MQ_URL = process.env.RABBIT_MQ_URL || 'localhost';
+const RABBIT_MQ_PORT = process.env.RABBIT_MQ_PORT || 5672;
+const RABBIT_MQ_QUEUE = process.env.RABBIT_MQ_QUEUE || 'test_queue';
 
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestApplication>(AppModule);
+
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://${RABBIT_MQ_ACC}:${RABBIT_MQ_PW}@${RABBIT_MQ_URL}:${RABBIT_MQ_PORT}`],
+      queue: RABBIT_MQ_QUEUE,
+      prefetchCount: 1,
+      noAck: false,
+      queueOptions: {
+        durable: false
+      },
+    }
+  });
+
   const options = new DocumentBuilder()
     .setTitle('xxxx API Services')
     .setDescription('xxxx API Services')
@@ -67,6 +88,8 @@ async function bootstrap() {
 
     app.useStaticAssets(path.join(path.resolve(__dirname, 'static/api-json')));
   }
+
+  await app.startAllMicroservicesAsync();
 
   const port = process.env.PORT || 3000;
   await app.listen(port).then(() => {
