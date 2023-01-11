@@ -37,7 +37,7 @@
     "amqp-connection-manager": "^3.2.0",
     "amqplib": "^0.6.0",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "dotenv": "^8.2.0",
     "joi": "^14.3.1",
     "luxon": "^1.25.0",
